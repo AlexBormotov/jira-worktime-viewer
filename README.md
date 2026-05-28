@@ -2,6 +2,8 @@
 
 A browser bookmarklet that shows your logged work time directly on any Jira page.
 
+📺 [Installation walkthrough video](https://youtu.be/WgnBNNXFlwI)
+
 ## What it does
 
 Opens a floating panel with three tabs over the current Jira page. All data is fetched once from the Jira REST API.

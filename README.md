@@ -2,7 +2,7 @@
 
 A browser bookmarklet that shows your logged work time directly on any Jira page.
 
-📺 [Installation walkthrough video](https://youtu.be/WgnBNNXFlwI)
+📺 [Video: How to install (russian)](https://youtu.be/WgnBNNXFlwI)
 
 ## What it does
 

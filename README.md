@@ -8,6 +8,12 @@ A browser bookmarklet that shows your logged work time directly on any Jira page
 
 Opens a floating panel with three tabs over the current Jira page. All data is fetched once from the Jira REST API.
 
+Projects, tasks, and worklog rows with zero logged time are left out. A project column appears only when that project has hours in the current view. A `--` cell means no time on that day, while the project still has time on another day.
+
+**From / To**, under the tabs, limits every tab to a date range. Leave a field empty to keep that side open. The boundary day is included. **Reset** clears both fields and shows the full log again. Task totals count only hours inside the range.
+
+The screenshots below show the three tabs. The date fields sit above the table and are not in these images.
+
 **By Day** — daily matrix: rows = dates, columns = projects, with totals:
 
 ![My time by day](img/By-Day.png)
@@ -45,6 +51,8 @@ The bookmark is now saved with the full script intact.
 
 **5. Done.** Click the bookmark on any Jira page to open the panel.
 
+To pick up a new version, run the installer again and drag the new **My time** button onto the old bookmark. The saved bookmark keeps the script from the moment you dragged it.
+
 ---
 
 ## Usage
@@ -52,7 +60,8 @@ The bookmark is now saved with the full script intact.
 1. Navigate to any page on your Jira instance (must be logged in).
 2. Click the **My time** bookmark.
 3. The panel loads and displays your worklogs. Switch between tabs as needed.
-4. Click **×** in the panel header to close it.
+4. Set **From** and **To** to limit the tables. Click **Reset** to show every date again.
+5. Click **×** in the panel header to close it.
 
 ---
 
@@ -61,8 +70,8 @@ The bookmark is now saved with the full script intact.
 The bookmarklet calls Jira REST API endpoints using your existing browser session (no credentials required):
 
 - `GET /rest/api/3/myself` — resolves your account ID
-- `GET /rest/api/3/search/jql?jql=worklogAuthor=currentUser()` — fetches issues with your worklogs
-- `GET /rest/api/3/issue/{key}/worklog` — fetches full worklog details if the issue has more than 20 entries
+- `GET /rest/api/3/search/jql?jql=worklogAuthor=currentUser()` — fetches every issue with your worklogs, page by page (`nextPageToken`, 100 issues per page)
+- `GET /rest/api/3/issue/{key}/worklog` — loads the rest of an issue's worklogs when search returns only the first 20, and keeps requesting pages of 100 until a short page comes back
 
 All requests use the same authentication cookie that Jira already has in your browser. Nothing is sent anywhere else.
 
